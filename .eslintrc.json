@@ -5,7 +5,6 @@
   },
   "parser": "esprima",
   "rules": {
-    "semi": ["error", "never"],
     "import/first": 0
   }
 }

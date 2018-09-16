@@ -1,19 +1,7 @@
-const Mailgun = require("mailgun-js");
+const config = require("../../config");
+const mailgunServer = require("../../config/mailgun");
 
-const mailgunApiKey =
-  process.env.MAILGUN_API_KEY ||
-  "1678fb0d3fcf0ab36c7174671a6f5c8e-7bbbcb78-08978c27";
-const mailgunDomain =
-  process.env.MAILGUN_DOMAIN ||
-  "sandbox7643b823e2294cc5832af0e2128ab5ea.mailgun.org";
-const mailgunFromEmail =
-  process.env.MAILGUN_FROM_EMAIL ||
-  "<inquiry@sandbox7643b823e2294cc5832af0e2128ab5ea.mailgun.org>";
-
-const mailgun = new Mailgun({
-  apiKey: mailgunApiKey,
-  domain: mailgunDomain
-});
+const { mailgunFromEmail } = config.mailgun;
 
 const to = "joon.young1014@gmail.com";
 
@@ -39,7 +27,7 @@ exports.sendApplyEmail = (
     <b>Details</b>: ${details}
     `
   };
-  mailgun.messages().send(data, (err, body) => {
+  mailgunServer.messages().send(data, (err, body) => {
     if (err) return next(err);
     return res.json(body);
   });
@@ -73,7 +61,7 @@ exports.sendContactEmail = (
     <b>Details</b>: ${details}
     `
   };
-  mailgun.messages().send(data, (err, body) => {
+  mailgunServer.messages().send(data, (err, body) => {
     if (err) return next(err);
     return res.json(body);
   });
