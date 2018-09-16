@@ -1,30 +1,31 @@
-const Mailgun = require('mailgun-js')
+const Mailgun = require("mailgun-js");
 
 const mailgunApiKey =
-  process.env.MAILGUN_API_KEY || 'key-7130514599706e9b484f4540166e82bc'
+  process.env.MAILGUN_API_KEY ||
+  "1678fb0d3fcf0ab36c7174671a6f5c8e-7bbbcb78-08978c27";
 const mailgunDomain =
   process.env.MAILGUN_DOMAIN ||
-  'sandboxe224e682a8c149a3941547647f3e0efe.mailgun.org'
+  "sandbox7643b823e2294cc5832af0e2128ab5ea.mailgun.org";
 const mailgunFromEmail =
   process.env.MAILGUN_FROM_EMAIL ||
-  '<inquiry@sandboxe224e682a8c149a3941547647f3e0efe.mailgun.org>'
+  "<inquiry@sandbox7643b823e2294cc5832af0e2128ab5ea.mailgun.org>";
 
 const mailgun = new Mailgun({
   apiKey: mailgunApiKey,
-  domain: mailgunDomain,
-})
+  domain: mailgunDomain
+});
 
-const to = 'joon.young1014@gmail.com'
+const to = "joon.young1014@gmail.com";
 
 exports.sendApplyEmail = (
   { body: { name, role, email, details } },
   res,
-  next,
+  next
 ) => {
   const data = {
     from: `Apply ${mailgunFromEmail}`,
     to,
-    subject: 'New Application in /join Form!',
+    subject: "New Application in /join Form!",
     html: `
     <b>Name</b>: ${name}
     <br>
@@ -36,23 +37,23 @@ exports.sendApplyEmail = (
     <br>
     <br>
     <b>Details</b>: ${details}
-    `,
-  }
+    `
+  };
   mailgun.messages().send(data, (err, body) => {
-    if (err) return next(err)
-    return res.json(body)
-  })
-}
+    if (err) return next(err);
+    return res.json(body);
+  });
+};
 
 exports.sendContactEmail = (
   { body: { name, email, affiliation, reason, heard, details } },
   res,
-  next,
+  next
 ) => {
   const data = {
     from: `Apply ${mailgunFromEmail}`,
     to,
-    subject: 'New Contact in /contact Form!',
+    subject: "New Contact in /contact Form!",
     html: `
     <b>Name</b>: ${name}
     <br>
@@ -70,10 +71,10 @@ exports.sendContactEmail = (
     <br>
     <br>
     <b>Details</b>: ${details}
-    `,
-  }
+    `
+  };
   mailgun.messages().send(data, (err, body) => {
-    if (err) return next(err)
-    return res.json(body)
-  })
-}
+    if (err) return next(err);
+    return res.json(body);
+  });
+};
